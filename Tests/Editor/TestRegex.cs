@@ -2,11 +2,8 @@
 // MIT License
 // Copyright(c) 2020 Jonas Boetel
 //----------------------------------------
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using NUnit.Framework;
 using System.Text.RegularExpressions;
+using NUnit.Framework;
 
 namespace Lumpn.RegularExpressions
 {
@@ -28,6 +25,12 @@ namespace Lumpn.RegularExpressions
             Assert.AreEqual("ABC", abc1.ToString());
             Assert.AreEqual("ABC", abc2.ToString());
             Assert.AreEqual("ABC", abc3.ToString());
+
+            var regex = abc1.ToRegex();
+
+            Assert.IsTrue(regex.IsMatch("ABC"));
+            Assert.IsTrue(regex.IsMatch("123 ABC 456"));
+            Assert.IsFalse(regex.IsMatch("abc"));
         }
 
         [Test]
@@ -43,6 +46,13 @@ namespace Lumpn.RegularExpressions
             Assert.AreEqual("(?:A){3}", aaa1.ToString());
             Assert.AreEqual("(?:A){3}", aaa2.ToString());
             Assert.AreEqual("(?:A){3}", aaa3.ToString());
+
+            var regex = aaa1.ToRegex();
+
+            Assert.IsTrue(regex.IsMatch("AAA"));
+            Assert.IsTrue(regex.IsMatch("AAAAAA"));
+            Assert.IsTrue(regex.IsMatch("123 AAA 456"));
+            Assert.IsFalse(regex.IsMatch("ABA"));
         }
 
         [Test]
@@ -50,7 +60,7 @@ namespace Lumpn.RegularExpressions
         {
             // 555-555-5555
             var digit = Pattern.Digit;
-            var dash = new Literal("-");
+            var dash = Pattern.Dash;
 
             var area = digit * 3;
             var exchange = digit * 3;
@@ -60,7 +70,7 @@ namespace Lumpn.RegularExpressions
 
             var capture = new Capture("phone", phone);
 
-            var regex = capture.ToRegex(RegexOptions.Compiled);
+            var regex = capture.ToRegex();
 
             var match1 = regex.Match("555-555-5555");
             var match2 = regex.Match("My phone number is 555-555-5555, and yours?");
@@ -73,6 +83,54 @@ namespace Lumpn.RegularExpressions
             Assert.AreEqual("555-555-5555", match1.Groups["phone"].ToString());
             Assert.AreEqual("555-555-5555", match2.Groups["phone"].ToString());
             Assert.AreEqual(string.Empty, match3.Groups["phone"].ToString());
+        }
+
+        [Test]
+        public void TestAlternation()
+        {
+            var foo = new Literal("foo");
+            var bar = new Literal("bar");
+
+            var alt1 = foo | bar;
+            var alt2 = new Alternation(foo, bar);
+            var alt3 = foo.Or(bar);
+
+            Assert.AreEqual("(?:foo|bar)", alt1.ToString());
+            Assert.AreEqual("(?:foo|bar)", alt2.ToString());
+            Assert.AreEqual("(?:foo|bar)", alt3.ToString());
+
+            var regex = alt1.ToRegex();
+
+            Assert.IsTrue(regex.IsMatch("foo"));
+            Assert.IsTrue(regex.IsMatch("bar"));
+            Assert.IsFalse(regex.IsMatch("baz"));
+        }
+
+        [Test]
+        public void TestOptional()
+        {
+            // +1 555-555-5555
+            // country code and separators optional
+
+            var digit = Pattern.Digit;
+            var dash = Pattern.Dash;
+            var space = Pattern.Space;
+            var separator = new Optional(dash | space);
+
+            var optionalPlus = Pattern.Plus.Optional();
+            var someDigits = new OneOrMore(digit);
+
+            var countryCode = new Optional(optionalPlus + someDigits);
+            var phone = countryCode + separator + digit * 3 + separator + digit * 3 + separator + digit * 4;
+
+            var regex = phone.ToRegex();
+
+            Assert.IsTrue(regex.IsMatch("+1 555-555-5555"));
+            Assert.IsTrue(regex.IsMatch("1-555-555-5555"));
+            Assert.IsTrue(regex.IsMatch("555-555-5555"));
+            Assert.IsTrue(regex.IsMatch("555 555 5555"));
+            Assert.IsTrue(regex.IsMatch("+911-555-555-5555"));
+            Assert.IsFalse(regex.IsMatch("127.0.0.1"));
         }
     }
 }

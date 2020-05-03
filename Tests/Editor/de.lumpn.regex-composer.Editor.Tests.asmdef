@@ -1,0 +1,17 @@
+{
+    "name": "de.lumpn.regex-composer.Editor.Tests",
+    "references": [
+        "GUID:67c4666f2ae832746b6ad98fcaf54aa1"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
