@@ -5,10 +5,10 @@
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 
-namespace Lumpn.RegularExpressions
+namespace Lumpn.RegularExpressions.Tests
 {
     [TestFixture]
-    public sealed class TestRegex
+    public sealed class RegexTest
     {
         [Test]
         public void TestSequence()
