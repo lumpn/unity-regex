@@ -4,48 +4,43 @@
 //----------------------------------------
 namespace Lumpn.RegularExpressions
 {
-    public abstract class Pattern
+    public sealed class Pattern : PatternBase
     {
-        public static Pattern Digit = new Literal("\\d");
-        public static Pattern NonDigit = new Literal("\\D");
+        public static PatternBase Digit = new Pattern("\\d");
+        public static PatternBase NonDigit = new Pattern("\\D");
 
-        public static Pattern Whitespace = new Literal("\\s");
-        public static Pattern NonWhitespace = new Literal("\\S");
+        public static PatternBase Whitespace = new Pattern("\\s");
+        public static PatternBase NonWhitespace = new Pattern("\\S");
 
-        public static Pattern Word = new Literal("\\w");
-        public static Pattern NonWord = new Literal("\\W");
+        public static PatternBase Word = new Pattern("\\w");
+        public static PatternBase NonWord = new Pattern("\\W");
 
-        public static Pattern AnyCharacter = new Literal(".");
-        public static Pattern Space = new Literal(" ");
-        public static Pattern Tab = new Literal("\t");
-        public static Pattern Dash = new Literal("-");
-        public static Pattern Slash = new Literal("/");
-        public static Pattern Backslash = new Literal("\\");
-        public static Pattern CarriageReturn = new Literal("\r");
-        public static Pattern NewLine = new Literal("\n");
-        public static Pattern Plus = new Literal("\\+");
-        public static Pattern Dot = new Literal("\\.");
+        public static PatternBase AnyCharacter = new Pattern(".");
+        public static PatternBase Space = new Pattern(" ");
+        public static PatternBase Tab = new Pattern("\t");
+        public static PatternBase Dash = new Pattern("-");
+        public static PatternBase Slash = new Pattern("/");
+        public static PatternBase Backslash = new Pattern("\\");
+        public static PatternBase CarriageReturn = new Pattern("\r");
+        public static PatternBase NewLine = new Pattern("\n");
+        public static PatternBase Plus = new Pattern("\\+");
+        public static PatternBase Dot = new Pattern("\\.");
 
-        public static Pattern UppercaseLetter = new Range('A', 'Z');
-        public static Pattern LowercaseLetter = new Range('a', 'z');
-        public static Pattern Letter = new Literal("[A-Za-z]");
-        public static Pattern LetterOrDigit = Word;
+        public static PatternBase UppercaseLetter = new Range('A', 'Z');
+        public static PatternBase LowercaseLetter = new Range('a', 'z');
+        public static PatternBase Letter = new Pattern("[A-Za-z]");
+        public static PatternBase LetterOrDigit = Word;
 
-        public static Pattern operator +(Pattern a, Pattern b)
+        private readonly string pattern;
+
+        private Pattern(string pattern)
         {
-            return new Sequence(a, b);
+            this.pattern = pattern;
         }
 
-        public static Pattern operator *(Pattern pattern, int count)
+        public override string ToString()
         {
-            return new Repeat(pattern, count);
+            return pattern;
         }
-
-        public static Pattern operator |(Pattern a, Pattern b)
-        {
-            return new Alternation(a, b);
-        }
-
-        public abstract override string ToString();
     }
 }

@@ -7,6 +7,14 @@ using NUnit.Framework;
 
 namespace Lumpn.RegularExpressions.Tests
 {
+    /// <summary>
+    /// Order of precedence in .NET:
+    /// 1. Escape character
+    /// 2. Groups and ranges
+    /// 3. Quantifiers
+    /// 4. Anchors and sequences
+    /// 5. Alternation
+    /// </summary>
     [TestFixture]
     public sealed class PrecedenceTest
     {
@@ -33,21 +41,21 @@ namespace Lumpn.RegularExpressions.Tests
             var leftToRight = "((^a)|b)$";
             var rightToLeft = "^(a|(b$))";
 
-            Assert.IsTrue(AreEqual(precedence, anchorsFirst, inputs));
-            Assert.IsFalse(AreEqual(precedence, alternationsFirst, inputs));
-            Assert.IsFalse(AreEqual(precedence, leftToRight, inputs));
-            Assert.IsFalse(AreEqual(precedence, rightToLeft, inputs));
+            Assert.IsTrue(AreEqual(precedence, anchorsFirst));
+            Assert.IsFalse(AreEqual(precedence, alternationsFirst));
+            Assert.IsFalse(AreEqual(precedence, leftToRight));
+            Assert.IsFalse(AreEqual(precedence, rightToLeft));
         }
 
         [Test]
-        public void QuantifiersPreceedConcatenations()
+        public void QuantifiersPreceedSequences()
         {
             var precedence = "ab*c";
             var quantifiersFirst = "a(b*)c";
-            var concatenationsFirst = "(ab)*c";
+            var sequencesFirst = "(ab)*c";
 
-            Assert.IsTrue(AreEqual(precedence, quantifiersFirst, inputs));
-            Assert.IsFalse(AreEqual(precedence, concatenationsFirst, inputs));
+            Assert.IsTrue(AreEqual(precedence, quantifiersFirst));
+            Assert.IsFalse(AreEqual(precedence, sequencesFirst));
         }
 
 
@@ -58,11 +66,11 @@ namespace Lumpn.RegularExpressions.Tests
             var quantifiersFirst = "^(a+)b$";
             var anchorsFirst = "(^a)+(b$)";
 
-            Assert.IsTrue(AreEqual(precedence, quantifiersFirst, inputs));
-            Assert.IsFalse(AreEqual(precedence, anchorsFirst, inputs));
+            Assert.IsTrue(AreEqual(precedence, quantifiersFirst));
+            Assert.IsFalse(AreEqual(precedence, anchorsFirst));
         }
 
-        private static bool AreEqual(string pattern1, string pattern2, string[] inputs)
+        private static bool AreEqual(string pattern1, string pattern2)
         {
             var regex1 = new Regex(pattern1);
             var regex2 = new Regex(pattern2);

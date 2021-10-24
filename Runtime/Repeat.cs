@@ -4,12 +4,12 @@
 //----------------------------------------
 namespace Lumpn.RegularExpressions
 {
-    public sealed class Repeat : Pattern
+    public sealed class Repeat : PatternBase
     {
-        private readonly Pattern pattern;
+        private readonly PatternBase pattern;
         private readonly int count;
 
-        public Repeat(Pattern pattern, int count)
+        public Repeat(PatternBase pattern, int count)
         {
             this.pattern = pattern;
             this.count = count;

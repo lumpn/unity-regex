@@ -4,18 +4,18 @@
 //----------------------------------------
 namespace Lumpn.RegularExpressions
 {
-    public sealed class Sequence : Pattern
+    public sealed class Sequence : PatternBase
     {
-        private readonly Pattern[] patterns;
+        private readonly PatternBase[] patterns;
 
-        public Sequence(params Pattern[] patterns)
+        public Sequence(params PatternBase[] patterns)
         {
             this.patterns = patterns;
         }
 
         public override string ToString()
         {
-            return string.Concat<Pattern>(patterns);
+            return string.Format("(?:{0})", string.Join<PatternBase>(")(?:", patterns));
         }
     }
 }

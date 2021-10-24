@@ -4,7 +4,7 @@
 //----------------------------------------
 namespace Lumpn.RegularExpressions
 {
-    public sealed class Range : Pattern
+    public sealed class Range : PatternBase
     {
         private readonly char first;
         private readonly char last;

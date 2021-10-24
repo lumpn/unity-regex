@@ -4,11 +4,11 @@
 //----------------------------------------
 namespace Lumpn.RegularExpressions
 {
-    public sealed class OneOrMore : Pattern
+    public sealed class OneOrMore : PatternBase
     {
-        private readonly Pattern pattern;
+        private readonly PatternBase pattern;
 
-        public OneOrMore(Pattern pattern)
+        public OneOrMore(PatternBase pattern)
         {
             this.pattern = pattern;
         }

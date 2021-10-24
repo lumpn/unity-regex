@@ -4,12 +4,12 @@
 //----------------------------------------
 namespace Lumpn.RegularExpressions
 {
-    public sealed class Capture : Pattern
+    public sealed class Capture : PatternBase
     {
         private readonly string name;
-        private readonly Pattern pattern;
+        private readonly PatternBase pattern;
 
-        public Capture(string name, Pattern pattern)
+        public Capture(string name, PatternBase pattern)
         {
             this.name = name;
             this.pattern = pattern;
