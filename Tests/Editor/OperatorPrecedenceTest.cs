@@ -16,7 +16,7 @@ namespace Lumpn.RegularExpressions.Tests
     /// 5. Alternation
     /// </summary>
     [TestFixture]
-    public sealed class PrecedenceTest
+    public sealed class OperatorPrecedenceTest
     {
         private static readonly string[] inputs =
         {
@@ -33,7 +33,7 @@ namespace Lumpn.RegularExpressions.Tests
         };
 
         [Test]
-        public void AnchorsPreceedAlternations()
+        public void AnchorsBeforeAlternation()
         {
             var precedence = "^a|b$";
             var anchorsFirst = "(^a)|(b$)";
@@ -48,7 +48,7 @@ namespace Lumpn.RegularExpressions.Tests
         }
 
         [Test]
-        public void QuantifiersPreceedSequences()
+        public void QuantifierBeforeSequence()
         {
             var precedence = "ab*c";
             var quantifiersFirst = "a(b*)c";
@@ -60,7 +60,7 @@ namespace Lumpn.RegularExpressions.Tests
 
 
         [Test]
-        public void QuantifiersPreceedAnchors()
+        public void QuantifierBeforeAnchors()
         {
             var precedence = "^a+b$";
             var quantifiersFirst = "^(a+)b$";
