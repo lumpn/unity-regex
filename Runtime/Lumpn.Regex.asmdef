@@ -1,11 +1,8 @@
 {
-    "name": "de.lumpn.regex-composer.Editor.Tests",
-    "references": [
-        "GUID:67c4666f2ae832746b6ad98fcaf54aa1"
-    ],
-    "includePlatforms": [
-        "Editor"
-    ],
+    "name": "Lumpn.Regex",
+    "rootNamespace": "",
+    "references": [],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
