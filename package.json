@@ -1,7 +1,7 @@
 {
-  "name": "de.lumpn.regex-composer",
-  "version": "0.1.0",
-  "displayName": "Lumpn Regex Composer",
+  "name": "de.lumpn.unity-regex",
+  "version": "0.1.1",
+  "displayName": "Regex Composer",
   "description": "Compose regular expressions using code.",
   "unity": "2017.1",
   "dependencies": {
