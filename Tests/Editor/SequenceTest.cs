@@ -12,24 +12,23 @@ namespace Lumpn.RegularExpressions.Tests
         [Test]
         public void Sequence()
         {
-            // ABC
-            var a = new Literal("A");
-            var b = new Literal("B");
-            var c = new Literal("C");
+            var a = new Literal("a");
+            var b = new Literal("b");
+            var c = new Literal("c");
 
-            var abc1 = a + b + c;
-            var abc2 = new Sequence(a, b, c);
+            var abc = new Sequence(a, b, c);
+            var abc2 = a + b + c;
             var abc3 = a.FollowedBy(b).FollowedBy(c);
 
-            Assert.AreEqual("ABC", abc1.ToString());
-            Assert.AreEqual("ABC", abc2.ToString());
-            Assert.AreEqual("ABC", abc3.ToString());
+            Assert.AreEqual("(?:a)(?:b)(?:c)", abc.ToString());
+            Assert.AreEqual("(?:(?:a)(?:b))(?:c)", abc2.ToString());
+            Assert.AreEqual("(?:(?:a)(?:b))(?:c)", abc3.ToString());
 
-            var regex = abc1.ToRegex();
-
-            Assert.IsTrue(regex.IsMatch("ABC"));
-            Assert.IsTrue(regex.IsMatch("123 ABC 456"));
-            Assert.IsFalse(regex.IsMatch("abc"));
+            var regex = abc.ToRegex();
+            Assert.IsTrue(regex.IsMatch("abc"));
+            Assert.IsTrue(regex.IsMatch("123 abc 456"));
+            Assert.IsFalse(regex.IsMatch("ab"));
+            Assert.IsFalse(regex.IsMatch("bc"));
         }
     }
 }
