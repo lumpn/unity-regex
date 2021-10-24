@@ -10,211 +10,75 @@ namespace Lumpn.RegularExpressions.Tests
     [TestFixture]
     public sealed class PrecedenceTest
     {
-        [Test]
-        public void AnchorsBeforeAlternation()
+        private static readonly string[] inputs =
         {
-            // precedence
-            {
-                var regex = new Regex("^a|b$");
-                Pass(regex, "a");
-                Pass(regex, "b");
-                Pass(regex, "ab");
-                Pass(regex, "acc");
-                Pass(regex, "ccb");
-            }
+                "a",
+                "aab",
+                "ab",
+                "abbc",
+                "abc",
+                "ababc",
+                "ac",
+                "b",
+                "c",
+                "cb",
+        };
 
-            // anchors first
-            {
-                var regex = new Regex("(^a)|(b$)");
-                Pass(regex, "a");
-                Pass(regex, "b");
-                Pass(regex, "ab");
-                Pass(regex, "acc");
-                Pass(regex, "ccb");
-            }
+        [Test]
+        public void AnchorsPreceedAlternations()
+        {
+            var precedence = "^a|b$";
+            var anchorsFirst = "(^a)|(b$)";
+            var alternationsFirst = "^(a|b)$";
+            var leftToRight = "((^a)|b)$";
+            var rightToLeft = "^(a|(b$))";
 
-            // alternation first
-            {
-                var regex = new Regex("^(a|b)$");
-                Pass(regex, "a");
-                Pass(regex, "b");
-                Fail(regex, "ab");
-                Fail(regex, "acc");
-                Fail(regex, "ccb");
-            }
-
-            // left-to-right
-            {
-                var regex = new Regex("((^a)|b)$");
-                Pass(regex, "a");
-                Pass(regex, "b");
-                Pass(regex, "ab");
-                Fail(regex, "acc");
-                Pass(regex, "ccb");
-            }
-
-            // right-to-left
-            {
-                var regex = new Regex("^(a|(b$))");
-                Pass(regex, "a");
-                Pass(regex, "b");
-                Pass(regex, "ab");
-                Pass(regex, "acc");
-                Fail(regex, "ccb");
-            }
+            Assert.IsTrue(AreEqual(precedence, anchorsFirst, inputs));
+            Assert.IsFalse(AreEqual(precedence, alternationsFirst, inputs));
+            Assert.IsFalse(AreEqual(precedence, leftToRight, inputs));
+            Assert.IsFalse(AreEqual(precedence, rightToLeft, inputs));
         }
 
         [Test]
-        public void QuantifiersBeforeConcatenation()
+        public void QuantifiersPreceedConcatenations()
         {
-            // precedence
-            {
-                var regex = new Regex("ab*c");
-                Pass(regex, "abbc");
-                Pass(regex, "abc");
-                Pass(regex, "ababc");
-                Pass(regex, "ac");
-                Fail(regex, "c");
-            }
+            var precedence = "ab*c";
+            var quantifiersFirst = "a(b*)c";
+            var concatenationsFirst = "(ab)*c";
 
-            // quantifiers first
-            {
-                var regex = new Regex("a(b*)c");
-                Pass(regex, "abbc");
-                Pass(regex, "abc");
-                Pass(regex, "ababc");
-                Pass(regex, "ac");
-                Fail(regex, "c");
-            }
-
-            // concatenation first
-            {
-                var regex = new Regex("(ab)*c");
-                Pass(regex, "abbc");
-                Pass(regex, "abc");
-                Pass(regex, "ababc");
-                Pass(regex, "ac");
-                Pass(regex, "c");
-            }
+            Assert.IsTrue(AreEqual(precedence, quantifiersFirst, inputs));
+            Assert.IsFalse(AreEqual(precedence, concatenationsFirst, inputs));
         }
 
 
         [Test]
-        public void QuantifiersBeforeAnchors()
+        public void QuantifiersPreceedAnchors()
         {
-            // precedence
-            {
-                var regex = new Regex("^a+b$");
-                Pass(regex, "aab");
-                Pass(regex, "ab");
-            }
+            var precedence = "^a+b$";
+            var quantifiersFirst = "^(a+)b$";
+            var anchorsFirst = "(^a)+(b$)";
 
-            // quantifiers first
-            {
-                var regex = new Regex("^(a+)b$");
-                Pass(regex, "aab");
-                Pass(regex, "ab");
-            }
-
-            // anchors first
-            {
-                var regex = new Regex("(^a)+(b$)");
-                Fail(regex, "aab");
-                Pass(regex, "ab");
-            }
-
-            // left-to-right
-            {
-                var regex = new Regex("(((^a)+)b)$");
-                Fail(regex, "aab");
-                Pass(regex, "ab");
-            }
-
-            // right-to-left
-            {
-                var regex = new Regex("^(a+(b$))");
-                Pass(regex, "aab");
-                Pass(regex, "ab");
-            }
+            Assert.IsTrue(AreEqual(precedence, quantifiersFirst, inputs));
+            Assert.IsFalse(AreEqual(precedence, anchorsFirst, inputs));
         }
 
-        [Test]
-        public void QuantifiersBeforeConcatenationEx()
+        private static bool AreEqual(string pattern1, string pattern2, string[] inputs)
         {
-            // precedence
+            var regex1 = new Regex(pattern1);
+            var regex2 = new Regex(pattern2);
+
+            foreach (var input in inputs)
             {
-                var regex = new Regex("^ab+cd?$");
-                Fail(regex, "");
-                Fail(regex, "ab");
-                Fail(regex, "abab");
-                //Fail(regex, "ababcd");
-                Pass(regex, "abbc");
-                Pass(regex, "abbcd");
-                Pass(regex, "abc");
-                Pass(regex, "abcd");
+                var match1 = regex1.IsMatch(input);
+                var match2 = regex2.IsMatch(input);
+
+                if (match1 != match2)
+                {
+                    return false;
+                }
             }
 
-            // quantifiers first
-            {
-                var regex = new Regex("a(b+)c(d?)");
-                Fail(regex, "");
-                Fail(regex, "ab");
-                Fail(regex, "abab");
-                //Fail(regex, "ababcd");
-                Pass(regex, "abbc");
-                Pass(regex, "abbcd");
-                Pass(regex, "abc");
-                Pass(regex, "abcd");
-            }
-
-            // concatenation first
-            {
-                var regex = new Regex("(ab)+(cd)?");
-                Fail(regex, "");
-                Pass(regex, "ab");
-                Pass(regex, "abab");
-                Pass(regex, "ababcd");
-                //Fail(regex, "abbc");
-                //Fail(regex, "abbcd");
-                //Fail(regex, "abc");
-                Pass(regex, "abcd");
-            }
-
-            // left-to-right
-            {
-                var regex = new Regex("(((ab)+c)d)?");
-                Pass(regex, "");
-                Fail(regex, "ab");
-                Fail(regex, "abab");
-                Fail(regex, "ababcd");
-                Pass(regex, "abbc");
-                Pass(regex, "abbcd");
-                Pass(regex, "abc");
-                Pass(regex, "abcd");
-            }
-
-            // right-to-left
-            {
-                var regex = new Regex("(a(b+(c(d?))))");
-                Pass(regex, "");
-                Fail(regex, "ab");
-                Fail(regex, "abab");
-                Fail(regex, "ababcd");
-                Pass(regex, "abbc");
-                Pass(regex, "abbcd");
-                Pass(regex, "abc");
-                Pass(regex, "abcd");
-            }
-        }
-
-        private static void Pass(Regex regex, string input)
-        {
-            Assert.IsTrue(regex.IsMatch(input));
-        }
-
-        private static void Fail(Regex regex, string input)
-        {
-            Assert.IsFalse(regex.IsMatch(input));
+            return true;
         }
     }
 }
