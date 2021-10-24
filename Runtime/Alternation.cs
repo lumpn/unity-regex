@@ -15,7 +15,7 @@ namespace Lumpn.RegularExpressions
 
         public override string ToString()
         {
-            return string.Format("(?:{0})", string.Join<Pattern>("|", patterns));
+            return string.Format("(?:(?:{0}))", string.Join<Pattern>(")|(?:", patterns));
         }
     }
 }

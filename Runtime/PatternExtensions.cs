@@ -28,6 +28,7 @@ namespace Lumpn.RegularExpressions
         {
             return new Optional(pattern);
         }
+
         public static Regex ToRegex(this Pattern pattern, RegexOptions options = RegexOptions.None)
         {
             return new Regex(pattern.ToString(), options);
