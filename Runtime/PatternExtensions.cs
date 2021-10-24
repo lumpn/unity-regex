@@ -19,14 +19,24 @@ namespace Lumpn.RegularExpressions
             return new Repeat(pattern, count);
         }
 
-        public static PatternBase Or(this PatternBase a, PatternBase b)
-        {
-            return new Alternation(a, b);
-        }
-
         public static PatternBase Optional(this PatternBase pattern)
         {
             return new Optional(pattern);
+        }
+
+        public static PatternBase ZeroOrMore(this PatternBase pattern)
+        {
+            return new ZeroOrMore(pattern);
+        }
+
+        public static PatternBase OneOrMore(this PatternBase pattern)
+        {
+            return new OneOrMore(pattern);
+        }
+
+        public static PatternBase Or(this PatternBase a, PatternBase b)
+        {
+            return new Alternation(a, b);
         }
 
         public static Regex ToRegex(this PatternBase pattern, RegexOptions options = RegexOptions.None)

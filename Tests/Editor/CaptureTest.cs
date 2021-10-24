@@ -10,7 +10,7 @@ namespace Lumpn.RegularExpressions.Tests
     public sealed class CaptureTest
     {
         [Test]
-        public void Capture()
+        public void TestCapture()
         {
             // 555-555-5555
             var digit = Pattern.Digit;

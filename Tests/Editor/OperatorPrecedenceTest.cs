@@ -21,14 +21,19 @@ namespace Lumpn.RegularExpressions.Tests
         private static readonly string[] inputs =
         {
                 "a",
+                "aa",
                 "aab",
                 "ab",
+                "aba",
+                "abab",
+                "ababc",
+                "abb",
                 "abbc",
                 "abc",
-                "ababc",
                 "ac",
                 "b",
                 "c",
+                "ca",
                 "cb",
         };
 

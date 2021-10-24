@@ -9,29 +9,39 @@ namespace Lumpn.RegularExpressions.Tests
     [TestFixture]
     public class QuantifierTest
     {
-
         [Test]
-        public void TestRepeat()
+        public void TestOneOrMore()
         {
-            // AAA
-            var a = new Literal("A");
+            var digit = Pattern.Digit;
+            var number = new OneOrMore(digit);
+            var number2 = digit.OneOrMore();
 
-            var aaa1 = a * 3;
-            var aaa2 = new Repeat(a, 3);
-            var aaa3 = a.RepeatedTimes(3);
+            Assert.AreEqual("(?:\\d)+", number.ToString());
+            Assert.AreEqual("(?:\\d)+", number2.ToString());
 
-            Assert.AreEqual("(?:A){3}", aaa1.ToString());
-            Assert.AreEqual("(?:A){3}", aaa2.ToString());
-            Assert.AreEqual("(?:A){3}", aaa3.ToString());
-
-            var regex = aaa1.ToRegex();
-
-            Assert.IsTrue(regex.IsMatch("AAA"));
-            Assert.IsTrue(regex.IsMatch("AAAAAA"));
-            Assert.IsTrue(regex.IsMatch("123 AAA 456"));
-            Assert.IsFalse(regex.IsMatch("ABA"));
+            var regex = number.ToRegex();
+            Assert.IsTrue(regex.IsMatch("1"));
+            Assert.IsTrue(regex.IsMatch("12"));
+            Assert.IsFalse(regex.IsMatch("a"));
         }
 
+        [Test]
+        public void TestZeroOrMore()
+        {
+            var a = new Literal("a");
+            var b = new Literal("b");
+            var anything = Pattern.AnyCharacter.ZeroOrMore();
+            var pattern = new Sequence(a, anything, b);
+
+            Assert.AreEqual("(?:a)(?:(?:.)*)(?:b)", pattern.ToString());
+
+            var regex = pattern.ToRegex();
+            Assert.IsTrue(regex.IsMatch("ab"));
+            Assert.IsTrue(regex.IsMatch("a1b"));
+            Assert.IsTrue(regex.IsMatch("a  b"));
+            Assert.IsFalse(regex.IsMatch("a"));
+            Assert.IsFalse(regex.IsMatch("b"));
+        }
 
         [Test]
         public void TestOptional()
@@ -51,13 +61,33 @@ namespace Lumpn.RegularExpressions.Tests
             var phone = countryCode + separator + digit * 3 + separator + digit * 3 + separator + digit * 4;
 
             var regex = phone.ToRegex();
-
             Assert.IsTrue(regex.IsMatch("+1 555-555-5555"));
             Assert.IsTrue(regex.IsMatch("1-555-555-5555"));
             Assert.IsTrue(regex.IsMatch("555-555-5555"));
             Assert.IsTrue(regex.IsMatch("555 555 5555"));
             Assert.IsTrue(regex.IsMatch("+911-555-555-5555"));
             Assert.IsFalse(regex.IsMatch("127.0.0.1"));
+        }
+
+        [Test]
+        public void TestRepeat()
+        {
+            var a = new Literal("a");
+
+            var aaa = new Repeat(a, 3);
+            var aaa2 = a * 3;
+            var aaa3 = a.RepeatedTimes(3);
+
+            Assert.AreEqual("(?:a){3}", aaa.ToString());
+            Assert.AreEqual("(?:a){3}", aaa2.ToString());
+            Assert.AreEqual("(?:a){3}", aaa3.ToString());
+
+            var regex = aaa.ToRegex();
+            Assert.IsFalse(regex.IsMatch("aa"));
+            Assert.IsTrue(regex.IsMatch("aaa"));
+            Assert.IsTrue(regex.IsMatch("aaaa"));
+            Assert.IsTrue(regex.IsMatch("123 aaa 456"));
+            Assert.IsFalse(regex.IsMatch("aba"));
         }
     }
 }

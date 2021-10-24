@@ -10,7 +10,7 @@ namespace Lumpn.RegularExpressions.Tests
     public sealed class AlternationTest
     {
         [Test]
-        public void Alternation()
+        public void TestAlternation()
         {
             var foo = new Literal("foo");
             var bar = new Literal("bar");
