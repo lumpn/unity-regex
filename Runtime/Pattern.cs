@@ -26,10 +26,12 @@ namespace Lumpn.RegularExpressions
         public static PatternBase Plus = new Pattern("\\+");
         public static PatternBase Dot = new Pattern("\\.");
 
-        public static PatternBase UppercaseLetter = new Range('A', 'Z');
-        public static PatternBase LowercaseLetter = new Range('a', 'z');
+        public static PatternBase UppercaseLetter = new Pattern("[A-Z]");
+        public static PatternBase LowercaseLetter = new Pattern("[a-z]");
         public static PatternBase Letter = new Pattern("[A-Za-z]");
-        public static PatternBase LetterOrDigit = Word;
+        public static PatternBase NonLetter = new Pattern("[^A-Za-z]");
+        public static PatternBase LetterOrDigit = new Pattern("[A-Za-z0-9]");
+        public static PatternBase NonLetterOrDigit = new Pattern("[^A-Za-z0-9]");
 
         private readonly string pattern;
 
