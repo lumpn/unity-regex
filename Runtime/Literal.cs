@@ -1,4 +1,4 @@
-//----------------------------------------
+﻿//----------------------------------------
 // MIT License
 // Copyright(c) 2020 Jonas Boetel
 //----------------------------------------
@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace Lumpn.RegularExpressions
 {
-    public sealed class Literal : PatternBase
+    public sealed class Literal : Pattern
     {
         private readonly string literal;
 

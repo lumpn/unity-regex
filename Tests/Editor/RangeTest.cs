@@ -54,7 +54,7 @@ namespace Lumpn.RegularExpressions.Tests
             Assert.IsFalse(IsMatch(Patterns.NonLetterOrDigit, "1"));
         }
 
-        private static bool IsMatch(PatternBase pattern, string input)
+        private static bool IsMatch(Pattern pattern, string input)
         {
             return pattern.ToRegex().IsMatch(input);
         }

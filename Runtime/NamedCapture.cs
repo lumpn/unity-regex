@@ -1,15 +1,15 @@
-//----------------------------------------
+﻿//----------------------------------------
 // MIT License
 // Copyright(c) 2020 Jonas Boetel
 //----------------------------------------
 namespace Lumpn.RegularExpressions
 {
-    public sealed class NamedCapture : PatternBase
+    public sealed class NamedCapture : Pattern
     {
         private readonly string name;
-        private readonly PatternBase pattern;
+        private readonly Pattern pattern;
 
-        public NamedCapture(string name, PatternBase pattern)
+        public NamedCapture(string name, Pattern pattern)
         {
             this.name = name;
             this.pattern = pattern;

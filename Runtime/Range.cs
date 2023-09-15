@@ -1,10 +1,10 @@
-//----------------------------------------
+﻿//----------------------------------------
 // MIT License
 // Copyright(c) 2020 Jonas Boetel
 //----------------------------------------
 namespace Lumpn.RegularExpressions
 {
-    public sealed class Range : PatternBase
+    public sealed class Range : Pattern
     {
         private readonly char first;
         private readonly char last;

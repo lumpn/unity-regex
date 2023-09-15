@@ -6,31 +6,31 @@ namespace Lumpn.RegularExpressions
 {
     public static class Patterns
     {
-        public static PatternBase Digit = new Verbatim("\\d");
-        public static PatternBase NonDigit = new Verbatim("\\D");
+        public static Pattern Digit = new Verbatim("\\d");
+        public static Pattern NonDigit = new Verbatim("\\D");
 
-        public static PatternBase Whitespace = new Verbatim("\\s");
-        public static PatternBase NonWhitespace = new Verbatim("\\S");
+        public static Pattern Whitespace = new Verbatim("\\s");
+        public static Pattern NonWhitespace = new Verbatim("\\S");
 
-        public static PatternBase Word = new Verbatim("\\w");
-        public static PatternBase NonWord = new Verbatim("\\W");
+        public static Pattern Word = new Verbatim("\\w");
+        public static Pattern NonWord = new Verbatim("\\W");
 
-        public static PatternBase AnyCharacter = new Verbatim(".");
-        public static PatternBase Space = new Verbatim(" ");
-        public static PatternBase Tab = new Verbatim("\t");
-        public static PatternBase Dash = new Verbatim("-");
-        public static PatternBase Slash = new Verbatim("/");
-        public static PatternBase Backslash = new Verbatim("\\");
-        public static PatternBase CarriageReturn = new Verbatim("\r");
-        public static PatternBase NewLine = new Verbatim("\n");
-        public static PatternBase Plus = new Verbatim("\\+");
-        public static PatternBase Dot = new Verbatim("\\.");
+        public static Pattern AnyCharacter = new Verbatim(".");
+        public static Pattern Space = new Verbatim(" ");
+        public static Pattern Tab = new Verbatim("\t");
+        public static Pattern Dash = new Verbatim("-");
+        public static Pattern Slash = new Verbatim("/");
+        public static Pattern Backslash = new Verbatim("\\");
+        public static Pattern CarriageReturn = new Verbatim("\r");
+        public static Pattern NewLine = new Verbatim("\n");
+        public static Pattern Plus = new Verbatim("\\+");
+        public static Pattern Dot = new Verbatim("\\.");
 
-        public static PatternBase UppercaseLetter = new Verbatim("[A-Z]");
-        public static PatternBase LowercaseLetter = new Verbatim("[a-z]");
-        public static PatternBase Letter = new Verbatim("[A-Za-z]");
-        public static PatternBase NonLetter = new Verbatim("[^A-Za-z]");
-        public static PatternBase LetterOrDigit = new Verbatim("[A-Za-z0-9]");
-        public static PatternBase NonLetterOrDigit = new Verbatim("[^A-Za-z0-9]");
+        public static Pattern UppercaseLetter = new Verbatim("[A-Z]");
+        public static Pattern LowercaseLetter = new Verbatim("[a-z]");
+        public static Pattern Letter = new Verbatim("[A-Za-z]");
+        public static Pattern NonLetter = new Verbatim("[^A-Za-z]");
+        public static Pattern LetterOrDigit = new Verbatim("[A-Za-z0-9]");
+        public static Pattern NonLetterOrDigit = new Verbatim("[^A-Za-z0-9]");
     }
 }

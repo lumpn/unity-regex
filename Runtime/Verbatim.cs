@@ -1,10 +1,10 @@
-//----------------------------------------
+﻿//----------------------------------------
 // MIT License
 // Copyright(c) 2023 Jonas Boetel
 //----------------------------------------
 namespace Lumpn.RegularExpressions
 {
-    public sealed class Verbatim : PatternBase
+    public sealed class Verbatim : Pattern
     {
         private readonly string pattern;
 

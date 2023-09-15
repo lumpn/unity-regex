@@ -1,15 +1,15 @@
-//----------------------------------------
+﻿//----------------------------------------
 // MIT License
 // Copyright(c) 2020 Jonas Boetel
 //----------------------------------------
 namespace Lumpn.RegularExpressions
 {
-    public sealed class Repeat : PatternBase
+    public sealed class Repeat : Pattern
     {
-        private readonly PatternBase pattern;
+        private readonly Pattern pattern;
         private readonly int count;
 
-        public Repeat(PatternBase pattern, int count)
+        public Repeat(Pattern pattern, int count)
         {
             this.pattern = pattern;
             this.count = count;

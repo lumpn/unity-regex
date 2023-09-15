@@ -1,14 +1,14 @@
-//----------------------------------------
+﻿//----------------------------------------
 // MIT License
 // Copyright(c) 2020 Jonas Boetel
 //----------------------------------------
 namespace Lumpn.RegularExpressions
 {
-    public sealed class Optional : PatternBase
+    public sealed class Optional : Pattern
     {
-        private readonly PatternBase pattern;
+        private readonly Pattern pattern;
 
-        public Optional(PatternBase pattern)
+        public Optional(Pattern pattern)
         {
             this.pattern = pattern;
         }
