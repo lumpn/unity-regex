@@ -1,4 +1,4 @@
-//----------------------------------------
+﻿//----------------------------------------
 // MIT License
 // Copyright(c) 2020 Jonas Boetel
 //----------------------------------------
@@ -12,7 +12,7 @@ namespace Lumpn.RegularExpressions.Tests
         [Test]
         public void TestOneOrMore()
         {
-            var digit = Pattern.Digit;
+            var digit = Patterns.Digit;
             var number = new OneOrMore(digit);
             var number2 = digit.OneOrMore();
 
@@ -30,7 +30,7 @@ namespace Lumpn.RegularExpressions.Tests
         {
             var a = new Literal("a");
             var b = new Literal("b");
-            var anything = Pattern.AnyCharacter.ZeroOrMore();
+            var anything = Patterns.AnyCharacter.ZeroOrMore();
             var pattern = new Sequence(a, anything, b);
 
             Assert.AreEqual("(?:a)(?:(?:.)*)(?:b)", pattern.ToString());
@@ -49,12 +49,12 @@ namespace Lumpn.RegularExpressions.Tests
             // +1 555-555-5555
             // country code and separators optional
 
-            var digit = Pattern.Digit;
-            var dash = Pattern.Dash;
-            var space = Pattern.Space;
+            var digit = Patterns.Digit;
+            var dash = Patterns.Dash;
+            var space = Patterns.Space;
             var separator = new Optional(dash | space);
 
-            var optionalPlus = Pattern.Plus.Optional();
+            var optionalPlus = Patterns.Plus.Optional();
             var someDigits = new OneOrMore(digit);
 
             var countryCode = new Optional(optionalPlus + someDigits);

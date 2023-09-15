@@ -1,4 +1,4 @@
-//----------------------------------------
+﻿//----------------------------------------
 // MIT License
 // Copyright(c) 2020 Jonas Boetel
 //----------------------------------------
@@ -13,8 +13,8 @@ namespace Lumpn.RegularExpressions.Tests
         public void TestCapture()
         {
             // 555-555-5555
-            var digit = Pattern.Digit;
-            var dash = Pattern.Dash;
+            var digit = Patterns.Digit;
+            var dash = Patterns.Dash;
 
             var area = digit * 3;
             var exchange = digit * 3;

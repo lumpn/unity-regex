@@ -1,4 +1,4 @@
-//----------------------------------------
+﻿//----------------------------------------
 // MIT License
 // Copyright(c) 2020 Jonas Boetel
 //----------------------------------------
@@ -25,33 +25,33 @@ namespace Lumpn.RegularExpressions.Tests
         [Test]
         public void TestMetaCharacters()
         {
-            Assert.IsTrue(IsMatch(Pattern.Word, "1"));
-            Assert.IsTrue(IsMatch(Pattern.Word, "A"));
-            Assert.IsTrue(IsMatch(Pattern.Word, "a"));
-            Assert.IsTrue(IsMatch(Pattern.Word, "_"));
-            Assert.IsFalse(IsMatch(Pattern.Word, "-"));
+            Assert.IsTrue(IsMatch(Patterns.Word, "1"));
+            Assert.IsTrue(IsMatch(Patterns.Word, "A"));
+            Assert.IsTrue(IsMatch(Patterns.Word, "a"));
+            Assert.IsTrue(IsMatch(Patterns.Word, "_"));
+            Assert.IsFalse(IsMatch(Patterns.Word, "-"));
 
-            Assert.IsTrue(IsMatch(Pattern.LetterOrDigit, "1"));
-            Assert.IsTrue(IsMatch(Pattern.LetterOrDigit, "A"));
-            Assert.IsTrue(IsMatch(Pattern.LetterOrDigit, "a"));
-            Assert.IsFalse(IsMatch(Pattern.LetterOrDigit, "-"));
-            Assert.IsFalse(IsMatch(Pattern.LetterOrDigit, "_"));
+            Assert.IsTrue(IsMatch(Patterns.LetterOrDigit, "1"));
+            Assert.IsTrue(IsMatch(Patterns.LetterOrDigit, "A"));
+            Assert.IsTrue(IsMatch(Patterns.LetterOrDigit, "a"));
+            Assert.IsFalse(IsMatch(Patterns.LetterOrDigit, "-"));
+            Assert.IsFalse(IsMatch(Patterns.LetterOrDigit, "_"));
         }
 
         [Test]
         public void TestNegativeRange()
         {
-            Assert.IsTrue(IsMatch(Pattern.NonLetter, "1"));
-            Assert.IsFalse(IsMatch(Pattern.NonLetter, "a"));
+            Assert.IsTrue(IsMatch(Patterns.NonLetter, "1"));
+            Assert.IsFalse(IsMatch(Patterns.NonLetter, "a"));
 
-            Assert.IsTrue(IsMatch(Pattern.NonDigit, "a"));
-            Assert.IsFalse(IsMatch(Pattern.NonDigit, "1"));
+            Assert.IsTrue(IsMatch(Patterns.NonDigit, "a"));
+            Assert.IsFalse(IsMatch(Patterns.NonDigit, "1"));
 
-            Assert.IsTrue(IsMatch(Pattern.NonLetterOrDigit, "!"));
-            Assert.IsTrue(IsMatch(Pattern.NonLetterOrDigit, "_"));
-            Assert.IsTrue(IsMatch(Pattern.NonLetterOrDigit, " "));
-            Assert.IsFalse(IsMatch(Pattern.NonLetterOrDigit, "a"));
-            Assert.IsFalse(IsMatch(Pattern.NonLetterOrDigit, "1"));
+            Assert.IsTrue(IsMatch(Patterns.NonLetterOrDigit, "!"));
+            Assert.IsTrue(IsMatch(Patterns.NonLetterOrDigit, "_"));
+            Assert.IsTrue(IsMatch(Patterns.NonLetterOrDigit, " "));
+            Assert.IsFalse(IsMatch(Patterns.NonLetterOrDigit, "a"));
+            Assert.IsFalse(IsMatch(Patterns.NonLetterOrDigit, "1"));
         }
 
         private static bool IsMatch(PatternBase pattern, string input)
