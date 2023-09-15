@@ -22,7 +22,7 @@ namespace Lumpn.RegularExpressions.Tests
 
             var phone = area + dash + exchange + dash + subscriber;
 
-            var capture = new Capture("phone", phone);
+            var capture = new NamedCapture("phone", phone);
 
             var regex = capture.ToRegex();
 
