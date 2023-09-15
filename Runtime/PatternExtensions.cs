@@ -39,6 +39,11 @@ namespace Lumpn.RegularExpressions
             return new Alternation(a, b);
         }
 
+        public static PatternBase Anchored(this PatternBase pattern)
+        {
+            return new Anchor(pattern);
+        }
+
         public static Regex ToRegex(this PatternBase pattern, RegexOptions options = RegexOptions.None)
         {
             return new Regex(pattern.ToString(), options);
