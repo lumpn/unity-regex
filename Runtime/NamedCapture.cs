@@ -2,6 +2,8 @@
 // MIT License
 // Copyright(c) 2020 Jonas Boetel
 //----------------------------------------
+using System.Text.RegularExpressions;
+
 namespace Lumpn.RegularExpressions
 {
     public sealed class NamedCapture : Pattern
@@ -13,6 +15,11 @@ namespace Lumpn.RegularExpressions
         {
             this.name = name;
             this.pattern = pattern;
+        }
+
+        public string GetValue(Match match)
+        {
+            return match.Groups[name].Value;
         }
 
         public override string ToString()
